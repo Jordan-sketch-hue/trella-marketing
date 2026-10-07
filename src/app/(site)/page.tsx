@@ -37,6 +37,21 @@ export default function HomePage() {
 
           {/* Live-results visual */}
           <div className="relative">
+            {/* Hero lifestyle photo */}
+            <div className="mb-4 flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop&q=80"
+                alt="Marketing professional"
+                className="h-20 w-28 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&q=80"
+                alt="Marketing strategy session"
+                className="h-20 flex-1 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
+              />
+            </div>
             <Card className="shadow-brand">
               <div className="flex items-center justify-between border-b border-line p-5">
                 <div>
@@ -141,7 +156,7 @@ export default function HomePage() {
             {featured.map((cs) => (
               <Link key={cs.slug} href={`/work/${cs.slug}`} className="group">
                 <Card className="h-full overflow-hidden transition hover:-translate-y-1 hover:shadow-brand">
-                  <CoverTile hex={cs.cover} label={cs.industry} className="aspect-[16/10]">
+                  <CoverTile hex={cs.cover} img={(cs as any).cover_img} label={cs.industry} className="aspect-[16/10]">
                     <div className="absolute inset-x-0 bottom-0 p-5">
                       <p className="text-lg font-bold text-white">{cs.client}</p>
                     </div>

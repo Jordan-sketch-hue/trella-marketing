@@ -53,6 +53,22 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             </div>
           </div>
 
+          {/* Hero visual strip */}
+          <div className="mb-4 flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=400&h=260&fit=crop&q=80"
+              alt="Marketing team at work"
+              className="h-24 w-32 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&h=260&fit=crop&q=80"
+              alt="Strategy session"
+              className="h-24 flex-1 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
+            />
+          </div>
+
           {/* Deliverables + outcomes card */}
           <Card className="shadow-brand">
             <div className="grid gap-px overflow-hidden rounded-2xl bg-line sm:grid-cols-2">
@@ -93,7 +109,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               {related.map((cs) => (
                 <Link key={cs.slug} href={`/work/${cs.slug}`} className="group">
                   <Card className="h-full overflow-hidden transition hover:-translate-y-1 hover:shadow-brand">
-                    <CoverTile hex={cs.cover} label={cs.industry} className="aspect-[16/10]">
+                    <CoverTile hex={cs.cover} img={(cs as any).cover_img} label={cs.industry} className="aspect-[16/10]">
                       <div className="absolute inset-x-0 bottom-0 p-5">
                         <p className="text-lg font-bold text-white">{cs.client}</p>
                       </div>
@@ -113,6 +129,35 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           </Container>
         </section>
       )}
+
+      {/* ---------- AMBASSADOR VISUAL ---------- */}
+      <section className="py-16">
+        <Container>
+          <div className="relative overflow-hidden rounded-3xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=420&fit=crop&q=80"
+              alt="Brand ambassador event"
+              className="h-64 w-full rounded-3xl object-cover sm:h-80"
+            />
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+            <div className="absolute inset-0 flex items-center p-8 sm:p-12">
+              <div className="max-w-md text-white">
+                <span className="rounded-full bg-accent/90 px-3 py-1 text-xs font-bold uppercase tracking-widest">Live Events &amp; Activations</span>
+                <h2 className="mt-3 text-2xl font-bold sm:text-3xl">Brand moments that stop the scroll</h2>
+                <p className="mt-2 text-sm leading-relaxed text-white/80">From product launches to ambassador campaigns — we put your brand in front of the right people, in the right rooms.</p>
+              </div>
+            </div>
+            {/* Floating team photo */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&q=80"
+              alt="Marketing professional"
+              className="absolute bottom-4 right-4 hidden size-20 rounded-2xl object-cover ring-4 ring-white shadow-xl sm:block"
+            />
+          </div>
+        </Container>
+      </section>
 
       {/* ---------- OTHER SERVICES STRIP ---------- */}
       <section className="bg-surface-2 py-20">

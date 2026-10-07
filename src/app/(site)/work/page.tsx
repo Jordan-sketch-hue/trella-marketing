@@ -46,7 +46,7 @@ export default function WorkPage() {
             {caseStudies.map((cs) => (
               <Link key={cs.slug} href={`/work/${cs.slug}`} className="group">
                 <Card className="h-full overflow-hidden transition hover:-translate-y-1 hover:shadow-brand">
-                  <CoverTile hex={cs.cover} label={cs.industry} className="aspect-[16/10]">
+                  <CoverTile hex={cs.cover} img={(cs as any).cover_img} label={cs.industry} className="aspect-[16/10]">
                     <div className="absolute inset-x-0 bottom-0 p-5">
                       <p className="text-lg font-bold text-white">{cs.client}</p>
                     </div>

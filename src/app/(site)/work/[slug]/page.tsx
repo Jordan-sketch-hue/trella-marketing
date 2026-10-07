@@ -37,7 +37,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <ArrowLeft className="size-4" /> All work
           </Link>
           <div className="mt-5">
-            <CoverTile hex={cs.cover} label={cs.industry} className="aspect-[16/9] sm:aspect-[2.4/1]">
+            <CoverTile hex={cs.cover} img={(cs as any).cover_img} label={cs.industry} className="aspect-[16/9] sm:aspect-[2.4/1]">
               <div className="absolute inset-0 flex flex-col justify-end p-7 sm:p-10">
                 <Eyebrow onDark>{cs.client}</Eyebrow>
                 <h1 className="mt-3 max-w-3xl text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">

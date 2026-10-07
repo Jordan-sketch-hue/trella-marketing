@@ -166,19 +166,19 @@ export const packages: Package[] = [
 ];
 
 export const team: TeamMember[] = [
-  { id: "tanya", name: "Tanya Reid", role: "Founder & Lead Strategist", initials: "TR",
+  { id: "tanya", name: "Tanya Reid", role: "Founder & Lead Strategist", initials: "TR", photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&h=300&fit=crop&q=80",
     bio: "15 years building Caribbean brands. Tanya pairs sharp positioning with a relentless focus on the numbers.",
     focus: ["Brand strategy", "Growth", "Client partnership"] },
-  { id: "amalia", name: "Amalia Brown", role: "Social Media Lead", initials: "AB",
+  { id: "amalia", name: "Amalia Brown", role: "Social Media Lead", initials: "AB", photo: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop&q=80",
     bio: "Lives in the trends. Amalia turns brands into communities people actually want to follow.",
     focus: ["Social strategy", "Community", "Trends"] },
-  { id: "devon", name: "Devon Clarke", role: "Paid Media Manager", initials: "DC",
+  { id: "devon", name: "Devon Clarke", role: "Paid Media Manager", initials: "DC", photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&q=80",
     bio: "Spreadsheet whisperer. Devon makes ad budgets work harder with relentless testing.",
     focus: ["Meta & Google ads", "Optimisation", "Attribution"] },
-  { id: "keisha", name: "Keisha Powell", role: "Content & Creative Director", initials: "KP",
+  { id: "keisha", name: "Keisha Powell", role: "Content & Creative Director", initials: "KP", photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=300&h=300&fit=crop&q=80",
     bio: "Director's eye, marketer's brain. Keisha leads shoots and design that look the part and perform.",
     focus: ["Creative direction", "Video", "Design"] },
-  { id: "marcus", name: "Marcus Lewis", role: "Web & Analytics", initials: "ML",
+  { id: "marcus", name: "Marcus Lewis", role: "Web & Analytics", initials: "ML", photo: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=300&h=300&fit=crop&q=80",
     bio: "Builds the websites and the dashboards behind them so every click is accounted for.",
     focus: ["Web build", "SEO", "Analytics"] },
 ];
@@ -191,6 +191,7 @@ export const caseStudies: CaseStudy[] = [
     title: "From quiet weeknights to a 6-week waitlist",
     summary: "A social-first content engine and local paid ads filled tables midweek and built a reservation waitlist.",
     cover: "#16019a",
+    cover_img: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&h=500&fit=crop&q=80",
     services: ["Social Media Management", "Paid Advertising", "Content & Creative"],
     duration: "8 months",
     results: [
@@ -215,6 +216,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Turning listings into a lead machine",
     summary: "A new website, listing funnels, and lead ads delivered a steady pipeline of qualified buyers.",
     cover: "#0a2a6b",
+    cover_img: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&h=500&fit=crop&q=80",
     services: ["Website & SEO", "Paid Advertising", "Analytics & Growth"],
     duration: "10 months",
     results: [
@@ -239,6 +241,7 @@ export const caseStudies: CaseStudy[] = [
     title: "A drop strategy that sells out in 48 hours",
     summary: "We turned a boutique into a hype brand with a content + email + paid drop playbook.",
     cover: "#ed1c24",
+    cover_img: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&h=500&fit=crop&q=80",
     services: ["Content & Creative", "Email & CRM", "Paid Advertising"],
     duration: "6 months",
     results: [
@@ -263,6 +266,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Filling classes with a referral-fuelled funnel",
     summary: "A challenge campaign plus member content cut acquisition cost and kept classes full.",
     cover: "#1f0a6b",
+    cover_img: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=500&fit=crop&q=80",
     services: ["Social Media Management", "Paid Advertising"],
     duration: "5 months",
     results: [
@@ -309,6 +313,7 @@ export const caseStudies: CaseStudy[] = [
     title: "Direct bookings that beat the OTAs",
     summary: "A booking-optimised site and seasonal campaigns shifted revenue away from commission platforms.",
     cover: "#0a4d5c",
+    cover_img: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=800&h=500&fit=crop&q=80",
     services: ["Website & SEO", "Paid Advertising", "Email & CRM"],
     duration: "9 months",
     results: [

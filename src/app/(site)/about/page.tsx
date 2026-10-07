@@ -113,9 +113,14 @@ export default function AboutPage() {
             {team.map((m) => (
               <Card key={m.id} className="flex h-full flex-col p-6">
                 <div className="flex items-center gap-4">
-                  <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand text-lg font-bold text-white shadow-brand">
-                    {m.initials}
-                  </span>
+                  {(m as any).photo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={(m as any).photo} alt={m.name} className="size-14 shrink-0 rounded-2xl object-cover ring-2 ring-brand/20 shadow-brand" />
+                  ) : (
+                    <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand text-lg font-bold text-white shadow-brand">
+                      {m.initials}
+                    </span>
+                  )}
                   <div>
                     <h3 className="font-bold leading-tight">{m.name}</h3>
                     <p className="text-sm font-medium text-brand">{m.role}</p>

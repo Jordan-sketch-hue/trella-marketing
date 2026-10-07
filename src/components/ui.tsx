@@ -117,14 +117,18 @@ export function Stat({ value, label, sub, onDark }: { value: string; label: stri
   );
 }
 
-/** Gradient-tinted cover tile from a hex (no external images) */
-export function CoverTile({ hex, label, className, children }: { hex: string; label?: string; className?: string; children?: ReactNode }) {
+/** Gradient-tinted cover tile — accepts optional photo URL */
+export function CoverTile({ hex, img, label, className, children }: { hex: string; img?: string; label?: string; className?: string; children?: ReactNode }) {
   return (
     <div
       className={cn("relative overflow-hidden rounded-2xl", className)}
-      style={{ backgroundImage: `linear-gradient(135deg, ${hex} 0%, ${hex}cc 55%, #08013f 140%)` }}
+      style={img ? undefined : { backgroundImage: `linear-gradient(135deg, ${hex} 0%, ${hex}cc 55%, #08013f 140%)` }}
     >
-      <div className="absolute inset-0 dot-grid opacity-30" />
+      {img && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={img} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      )}
+      <div className={cn("absolute inset-0", img ? "bg-black/50" : "dot-grid opacity-30")} />
       {label && <span className="absolute left-4 top-4 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold text-white backdrop-blur">{label}</span>}
       {children}
     </div>
