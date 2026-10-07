@@ -27,8 +27,8 @@ const SLIDES = [
   },
 ];
 
-const DURATION = 5;   // seconds each slide is "on"
-const TOTAL = SLIDES.length * DURATION; // 20s full cycle
+const DURATION = 5;
+const TOTAL = SLIDES.length * DURATION; // 20s
 
 export function PromoShowcase() {
   const waBase = "https://wa.me/18763149024?text=";
@@ -40,31 +40,36 @@ export function PromoShowcase() {
     >
       <style>{`
         /*
-         * Each slide owns 5s out of the 20s cycle (25%).
-         * Keyframe windows (as % of 20s):
-         *   0–3%   fade-in     (0–0.6s)
-         *   3–22%  fully on    (0.6–4.4s)
-         *   22–27% fade-out    (4.4–5.4s)  — overlaps next slide's fade-in
-         *   27–100% hidden
-         *
-         * Slides are staggered with animation-delay 0s / 5s / 10s / 15s.
-         * animation-fill-mode: backwards keeps each slide invisible
-         * during its delay window (before it starts).
+         * Split hero: flyer image is CONTAINED (no crop/zoom) on the right.
+         * Left dark panel holds the CTA.
+         * Slide 0 (trella-*-start) is immediately visible; slides 1-3 wait.
          */
-        @keyframes trella-bg {
-          0%, 3%     { opacity: 0; transform: scale(1.05); }
-          7%, 22%    { opacity: 1; transform: scale(1);    }
-          27%, 100%  { opacity: 0; transform: scale(1.03); }
+        @keyframes trella-slide-start {
+          0%, 22%    { opacity: 1; }
+          27%, 100%  { opacity: 0; }
         }
-        @keyframes trella-text {
-          0%, 5%     { opacity: 0; transform: translateY(14px); }
-          10%, 20%   { opacity: 1; transform: translateY(0);    }
+        @keyframes trella-slide {
+          0%, 3%     { opacity: 0; }
+          8%, 22%    { opacity: 1; }
+          27%, 100%  { opacity: 0; }
+        }
+        @keyframes trella-text-start {
+          0%, 20%    { opacity: 1; transform: translateY(0); }
           25%, 100%  { opacity: 0; transform: translateY(-6px); }
         }
+        @keyframes trella-text {
+          0%, 6%     { opacity: 0; transform: translateY(12px); }
+          12%, 20%   { opacity: 1; transform: translateY(0); }
+          25%, 100%  { opacity: 0; transform: translateY(-6px); }
+        }
+        @keyframes trella-label-start {
+          0%, 22%    { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.15); }
+          27%, 100%  { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
+        }
         @keyframes trella-label {
-          0%, 5%     { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.18); background: transparent; }
-          8%, 22%    { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.18); }
-          27%, 100%  { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.18); background: transparent; }
+          0%, 6%     { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
+          10%, 22%   { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.15); }
+          27%, 100%  { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
         }
         @keyframes trella-ticker {
           0%   { transform: translateX(0); }
@@ -72,41 +77,76 @@ export function PromoShowcase() {
         }
       `}</style>
 
-      {/* ── BACKGROUND SLIDES ── */}
+      {/* ── SLIDE LAYERS ── */}
       {SLIDES.map((s, i) => (
         <div
           key={i}
-          className="absolute inset-0"
-          style={{
-            animation: `trella-bg ${TOTAL}s linear infinite`,
+          className="absolute inset-0 flex"
+          style={i === 0 ? {
+            animation: `trella-slide-start ${TOTAL}s linear infinite`,
+            opacity: 1,
+          } : {
+            animation: `trella-slide ${TOTAL}s linear infinite`,
             animationDelay: `${i * DURATION}s`,
             animationFillMode: "backwards",
             opacity: 0,
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={s.bg}
-            alt=""
-            aria-hidden
-            className="absolute inset-0 h-full w-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-black/10" />
+          {/* LEFT: dark CTA panel — stays clear of the flyer art */}
+          <div className="relative z-10 flex w-2/5 shrink-0 flex-col justify-center px-8 py-16 lg:px-14 bg-black/95 lg:w-[38%]">
+            {/* Subtle diagonal blend into the image */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-r from-black/95 to-transparent" />
+
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#f5a623]">{s.service}</p>
+            <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+              {s.headline}
+            </h2>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-3">
+              <a
+                href={`${waBase}${encodeURIComponent(s.wa)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-[#f5a623] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#e09410]"
+              >
+                Book Now — WhatsApp
+              </a>
+              <a
+                href="tel:+18763149024"
+                className="inline-flex items-center justify-center rounded-full border-2 border-white/50 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                876-314-9024
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT: full flyer at object-contain — no cropping */}
+          <div className="relative flex-1 overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={s.bg}
+              alt={s.service}
+              className="absolute inset-0 h-full w-full object-contain object-center"
+            />
+            {/* Blend edge on the left where it meets the CTA panel */}
+            <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/60 to-transparent" />
+          </div>
         </div>
       ))}
 
-      {/* ── SERVICE LABELS (glow gold on active slide) ── */}
-      <div className="absolute top-6 left-6 right-6 z-20 flex flex-wrap gap-2 sm:top-8 sm:left-10">
+      {/* ── SERVICE LABEL PILLS ── */}
+      <div className="absolute left-6 right-6 top-5 z-20 flex flex-wrap gap-2 sm:left-8 sm:top-6">
         {SLIDES.map((s, i) => (
           <span
             key={i}
-            className="rounded-full border px-3 py-1.5 text-xs font-bold uppercase tracking-widest"
-            style={{
+            className="rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest"
+            style={i === 0 ? {
+              animation: `trella-label-start ${TOTAL}s linear infinite`,
+            } : {
               animation: `trella-label ${TOTAL}s linear infinite`,
               animationDelay: `${i * DURATION}s`,
               animationFillMode: "backwards",
-              color: "rgba(255,255,255,0.4)",
-              borderColor: "rgba(255,255,255,0.18)",
+              color: "rgba(255,255,255,0.38)",
+              borderColor: "rgba(255,255,255,0.15)",
             }}
           >
             {s.service}
@@ -114,49 +154,15 @@ export function PromoShowcase() {
         ))}
       </div>
 
-      {/* ── SLIDE TEXT + CTA ── */}
-      {SLIDES.map((s, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 z-10 flex flex-col justify-end p-6 pb-20 sm:p-10 sm:pb-20 lg:p-16 lg:pb-20"
-          style={{
-            animation: `trella-text ${TOTAL}s linear infinite`,
-            animationDelay: `${i * DURATION}s`,
-            animationFillMode: "backwards",
-            opacity: 0,
-          }}
-        >
-          <h2 className="max-w-2xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-            {s.headline}
-          </h2>
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a
-              href={`${waBase}${encodeURIComponent(s.wa)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#f5a623] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#e09410]"
-            >
-              Book Now — WhatsApp
-            </a>
-            <a
-              href="tel:+18763149024"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-white/50 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/10"
-            >
-              876-314-9024
-            </a>
-          </div>
-        </div>
-      ))}
-
       {/* ── SCROLLING TICKER ── */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden border-t border-white/10 bg-black/70 py-2.5">
+      <div className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden border-t border-white/10 bg-black/90 py-2">
         <div
           className="flex w-max whitespace-nowrap"
-          style={{ animation: "trella-ticker 20s linear infinite" }}
+          style={{ animation: "trella-ticker 22s linear infinite" }}
         >
           {[...SLIDES, ...SLIDES].map((s, i) => (
-            <span key={i} className="mx-8 text-xs font-bold uppercase tracking-[0.2em] text-[#f5a623]">
-              {s.service} <span className="mx-3 text-white/30">·</span>
+            <span key={i} className="mx-8 text-[10px] font-bold uppercase tracking-[0.22em] text-[#f5a623]">
+              {s.service} <span className="mx-3 text-white/25">·</span>
             </span>
           ))}
         </div>
