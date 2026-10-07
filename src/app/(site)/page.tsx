@@ -14,8 +14,16 @@ export default function HomePage() {
     <>
       {/* ---------- HERO ---------- */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 brand-gradient-soft" />
-        <div className="absolute inset-0 dot-grid opacity-60" />
+        {/* Hero background photo */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&h=900&fit=crop&q=80"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-white/80" />
+        <div className="absolute inset-0 dot-grid opacity-30" />
         <Container className="relative grid items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
           <div>
             <Eyebrow>Marketing Consultant · Kingston, JA</Eyebrow>
@@ -37,22 +45,7 @@ export default function HomePage() {
 
           {/* Live-results visual */}
           <div className="relative">
-            {/* Hero lifestyle photo */}
-            <div className="mb-4 flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop&q=80"
-                alt="Marketing professional"
-                className="h-20 w-28 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
-              />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=300&fit=crop&q=80"
-                alt="Marketing strategy session"
-                className="h-20 flex-1 rounded-2xl object-cover shadow-lg ring-2 ring-brand/20"
-              />
-            </div>
-            <Card className="shadow-brand">
+              <Card className="shadow-brand">
               <div className="flex items-center justify-between border-b border-line p-5">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-ink-soft">Client results</p>
