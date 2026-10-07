@@ -38,6 +38,7 @@ export type CaseStudy = {
   approach: string[];
   outcome: string;
   testimonial?: string; // testimonial id
+  cover_img?: string;
 };
 
 export type Testimonial = {
@@ -69,6 +70,7 @@ export type TeamMember = {
   bio: string;
   focus: string[];
   initials?: string;
+  photo?: string;
 };
 
 export type ProcessStep = { step: number; title: string; description: string; icon: string };
