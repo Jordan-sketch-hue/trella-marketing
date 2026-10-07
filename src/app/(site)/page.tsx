@@ -119,10 +119,6 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
-
-      {/* ---------- PROMO SHOWCASE ---------- */}
-      <PromoShowcase />
-
       {/* ---------- PROCESS ---------- */}
       <section className="py-20">
         <Container>
