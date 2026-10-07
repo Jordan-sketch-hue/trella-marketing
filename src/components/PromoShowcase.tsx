@@ -39,11 +39,6 @@ export function PromoShowcase() {
       style={{ height: "min(92vh, 720px)" }}
     >
       <style>{`
-        /*
-         * Split hero: flyer image is CONTAINED (no crop/zoom) on the right.
-         * Left dark panel holds the CTA.
-         * Slide 0 (trella-*-start) is immediately visible; slides 1-3 wait.
-         */
         @keyframes trella-slide-start {
           0%, 22%    { opacity: 1; }
           27%, 100%  { opacity: 0; }
@@ -81,7 +76,7 @@ export function PromoShowcase() {
       {SLIDES.map((s, i) => (
         <div
           key={i}
-          className="absolute inset-0 flex"
+          className="absolute inset-0 flex flex-col sm:flex-row"
           style={i === 0 ? {
             animation: `trella-slide-start ${TOTAL}s linear infinite`,
             opacity: 1,
@@ -92,21 +87,36 @@ export function PromoShowcase() {
             opacity: 0,
           }}
         >
-          {/* LEFT: dark CTA panel — stays clear of the flyer art */}
-          <div className="relative z-10 flex w-2/5 shrink-0 flex-col justify-center px-8 py-16 lg:px-14 bg-black/95 lg:w-[38%]">
-            {/* Subtle diagonal blend into the image */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-r from-black/95 to-transparent" />
+          {/*
+           * MOBILE: stacked — flyer on top (60%), CTA below (40%)
+           * DESKTOP (sm+): side-by-side — dark CTA left 38%, flyer right 62%
+           */}
 
+          {/* MOBILE ONLY: flyer on top */}
+          <div className="relative h-[55%] w-full shrink-0 sm:hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={s.bg}
+              alt={s.service}
+              className="absolute inset-0 h-full w-full object-contain object-center"
+            />
+            {/* Bottom fade into CTA panel below */}
+            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent" />
+          </div>
+
+          {/* DESKTOP: dark CTA panel on the left */}
+          <div className="relative hidden sm:flex w-[38%] shrink-0 flex-col justify-center px-10 py-16 lg:px-14 bg-black/95">
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-r from-black/95 to-transparent" />
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#f5a623]">{s.service}</p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+            <h2 className="mt-3 text-3xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl">
               {s.headline}
             </h2>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-3">
+            <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href={`${waBase}${encodeURIComponent(s.wa)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[#f5a623] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#e09410]"
+                className="inline-flex items-center justify-center rounded-full bg-[#f5a623] px-5 py-3 text-sm font-bold text-black transition hover:bg-[#e09410]"
               >
                 Book Now — WhatsApp
               </a>
@@ -119,26 +129,49 @@ export function PromoShowcase() {
             </div>
           </div>
 
-          {/* RIGHT: full flyer at object-contain — no cropping */}
-          <div className="relative flex-1 overflow-hidden">
+          {/* DESKTOP: full flyer on the right */}
+          <div className="relative hidden flex-1 overflow-hidden sm:block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={s.bg}
               alt={s.service}
               className="absolute inset-0 h-full w-full object-contain object-center"
             />
-            {/* Blend edge on the left where it meets the CTA panel */}
-            <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-black/60 to-transparent" />
+            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent" />
+          </div>
+
+          {/* MOBILE: CTA panel below the flyer */}
+          <div className="flex min-h-0 flex-1 flex-col justify-center px-6 pb-14 pt-2 sm:hidden">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f5a623]">{s.service}</p>
+            <h2 className="mt-1.5 text-2xl font-bold leading-snug text-white">
+              {s.headline}
+            </h2>
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              <a
+                href={`${waBase}${encodeURIComponent(s.wa)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-[#f5a623] px-5 py-2.5 text-sm font-bold text-black transition hover:bg-[#e09410]"
+              >
+                Book Now — WhatsApp
+              </a>
+              <a
+                href="tel:+18763149024"
+                className="inline-flex items-center justify-center rounded-full border-2 border-white/50 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                876-314-9024
+              </a>
+            </div>
           </div>
         </div>
       ))}
 
       {/* ── SERVICE LABEL PILLS ── */}
-      <div className="absolute left-6 right-6 top-5 z-20 flex flex-wrap gap-2 sm:left-8 sm:top-6">
+      <div className="absolute left-4 right-4 top-4 z-20 flex flex-wrap gap-1.5 sm:left-8 sm:top-5 sm:gap-2">
         {SLIDES.map((s, i) => (
           <span
             key={i}
-            className="rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest"
+            className="rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest sm:px-3 sm:text-[10px]"
             style={i === 0 ? {
               animation: `trella-label-start ${TOTAL}s linear infinite`,
             } : {
@@ -161,7 +194,7 @@ export function PromoShowcase() {
           style={{ animation: "trella-ticker 22s linear infinite" }}
         >
           {[...SLIDES, ...SLIDES].map((s, i) => (
-            <span key={i} className="mx-8 text-[10px] font-bold uppercase tracking-[0.22em] text-[#f5a623]">
+            <span key={i} className="mx-8 text-[9px] font-bold uppercase tracking-[0.22em] text-[#f5a623] sm:text-[10px]">
               {s.service} <span className="mx-3 text-white/25">·</span>
             </span>
           ))}
