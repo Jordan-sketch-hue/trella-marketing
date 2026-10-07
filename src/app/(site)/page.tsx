@@ -1,8 +1,9 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { ArrowRight, Check, Quote, Star, TrendingUp, MousePointerClick } from "lucide-react";
 import { Container, SectionHeading, Button, Card, Badge, IconTile, Stars, Stat, CoverTile, Eyebrow } from "@/components/ui";
 import { Icon } from "@/components/Icon";
 import { AreaTrend, Spark } from "@/components/charts";
+import { PromoShowcase } from "@/components/PromoShowcase";
 import {
   brand, heroStats, serviceCategories, processSteps, caseStudies, packages, testimonials, clients, monthlyTrend,
 } from "@/lib/data";
@@ -17,7 +18,7 @@ export default function HomePage() {
         {/* Hero background photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1600&h=900&fit=crop&q=80"
+          src="/images/trella/professional-models.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
@@ -118,6 +119,9 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      {/* ---------- PROMO SHOWCASE ---------- */}
+      <PromoShowcase />
 
       {/* ---------- PROCESS ---------- */}
       <section className="py-20">

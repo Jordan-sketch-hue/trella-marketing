@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Check, Target } from "lucide-react";
 import { Container, SectionHeading, Button, Card, Badge, IconTile, CoverTile, Eyebrow } from "@/components/ui";
@@ -34,7 +34,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <section className="relative overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1600&h=900&fit=crop&q=80"
+          src="/images/trella/green-dress-promo.webp"
           alt="" aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -126,7 +126,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           <div className="relative overflow-hidden rounded-3xl">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=420&fit=crop&q=80"
+              src="/images/trella/brand-ambassador.webp"
               alt="Brand ambassador event"
               className="h-64 w-full rounded-3xl object-cover sm:h-80"
             />
@@ -141,7 +141,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             {/* Floating team photo */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&q=80"
+              src="/images/trella/dancers-promo-rep.webp"
               alt="Marketing professional"
               className="absolute bottom-4 right-4 hidden size-20 rounded-2xl object-cover ring-4 ring-white shadow-xl sm:block"
             />
