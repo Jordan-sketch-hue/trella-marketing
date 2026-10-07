@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "trella-marketing",
   "version": "0.1.0",
   "private": true,
@@ -19,7 +19,6 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -30,3 +29,4 @@
     "typescript": "^5"
   }
 }
+
