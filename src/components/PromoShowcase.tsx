@@ -30,13 +30,30 @@ const SLIDES = [
 const DURATION = 5;
 const TOTAL = SLIDES.length * DURATION; // 20s
 
+/*
+ * CTA panel background — layered:
+ *   1. White micro-dot grid (barely-there texture, breaks the flat surface)
+ *   2. Gold radial glow bottom-left (warms the CTA zone)
+ *   3. Brand-blue radial glow top-right (cool brand counterpoint)
+ *   4. Very dark navy base (#060612) — not pure black, has depth
+ */
+const CTA_BG: React.CSSProperties = {
+  backgroundImage: [
+    "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
+    "radial-gradient(ellipse 80% 55% at 5% 100%, rgba(245,166,35,0.13) 0%, transparent 60%)",
+    "radial-gradient(ellipse 55% 40% at 95% 5%, rgba(22,1,154,0.18) 0%, transparent 55%)",
+  ].join(", "),
+  backgroundSize: "22px 22px, auto, auto",
+  backgroundColor: "#060612",
+};
+
 export function PromoShowcase() {
   const waBase = "https://wa.me/18763149024?text=";
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black"
-      style={{ height: "min(92vh, 720px)" }}
+      className="relative w-full overflow-hidden"
+      style={{ height: "min(92vh, 720px)", backgroundColor: "#060612" }}
     >
       <style>{`
         @keyframes trella-slide-start {
@@ -48,23 +65,23 @@ export function PromoShowcase() {
           8%, 22%    { opacity: 1; }
           27%, 100%  { opacity: 0; }
         }
-        @keyframes trella-text-start {
-          0%, 20%    { opacity: 1; transform: translateY(0); }
-          25%, 100%  { opacity: 0; transform: translateY(-6px); }
-        }
-        @keyframes trella-text {
-          0%, 6%     { opacity: 0; transform: translateY(12px); }
-          12%, 20%   { opacity: 1; transform: translateY(0); }
-          25%, 100%  { opacity: 0; transform: translateY(-6px); }
-        }
         @keyframes trella-label-start {
-          0%, 22%    { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.15); }
-          27%, 100%  { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
+          0%, 22%    { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.14); }
+          27%, 100%  { color: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.12); background: transparent; }
         }
         @keyframes trella-label {
-          0%, 6%     { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
-          10%, 22%   { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.15); }
-          27%, 100%  { color: rgba(255,255,255,0.38); border-color: rgba(255,255,255,0.15); background: transparent; }
+          0%, 6%     { color: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.12); background: transparent; }
+          10%, 22%   { color: #f5a623; border-color: #f5a623; background: rgba(245,166,35,0.14); }
+          27%, 100%  { color: rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.12); background: transparent; }
+        }
+        @keyframes trella-text-start {
+          0%, 20%    { opacity: 1; transform: translateY(0); }
+          25%, 100%  { opacity: 0; transform: translateY(-5px); }
+        }
+        @keyframes trella-text {
+          0%, 6%     { opacity: 0; transform: translateY(10px); }
+          12%, 20%   { opacity: 1; transform: translateY(0); }
+          25%, 100%  { opacity: 0; transform: translateY(-5px); }
         }
         @keyframes trella-ticker {
           0%   { transform: translateX(0); }
@@ -87,27 +104,32 @@ export function PromoShowcase() {
             opacity: 0,
           }}
         >
-          {/*
-           * MOBILE: stacked — flyer on top (60%), CTA below (40%)
-           * DESKTOP (sm+): side-by-side — dark CTA left 38%, flyer right 62%
-           */}
-
-          {/* MOBILE ONLY: flyer on top */}
-          <div className="relative h-[55%] w-full shrink-0 sm:hidden">
+          {/* ── MOBILE: flyer on top ── */}
+          <div className="relative h-[56%] w-full shrink-0 sm:hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={s.bg}
               alt={s.service}
               className="absolute inset-0 h-full w-full object-contain object-center"
             />
-            {/* Bottom fade into CTA panel below */}
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent" />
+            {/* Fade into the styled CTA panel below */}
+            <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-[#060612] to-transparent" />
           </div>
 
-          {/* DESKTOP: dark CTA panel on the left */}
-          <div className="relative hidden sm:flex w-[38%] shrink-0 flex-col justify-center px-10 py-16 lg:px-14 bg-black/95">
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-r from-black/95 to-transparent" />
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#f5a623]">{s.service}</p>
+          {/* ── DESKTOP: dark textured CTA panel left ── */}
+          <div
+            className="relative hidden sm:flex w-[38%] shrink-0 flex-col justify-center px-10 py-16 lg:px-14"
+            style={CTA_BG}
+          >
+            {/* Thin edge fade into the flyer */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-r from-[#060612]/90 to-transparent" />
+
+            <p
+              className="text-xs font-bold uppercase tracking-[0.22em]"
+              style={{ color: "#f5a623" }}
+            >
+              {s.service}
+            </p>
             <h2 className="mt-3 text-3xl font-bold leading-tight text-white lg:text-5xl xl:text-6xl">
               {s.headline}
             </h2>
@@ -122,14 +144,14 @@ export function PromoShowcase() {
               </a>
               <a
                 href="tel:+18763149024"
-                className="inline-flex items-center justify-center rounded-full border-2 border-white/50 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/8"
               >
                 876-314-9024
               </a>
             </div>
           </div>
 
-          {/* DESKTOP: full flyer on the right */}
+          {/* ── DESKTOP: full flyer right ── */}
           <div className="relative hidden flex-1 overflow-hidden sm:block">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -137,13 +159,19 @@ export function PromoShowcase() {
               alt={s.service}
               className="absolute inset-0 h-full w-full object-contain object-center"
             />
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent" />
+            {/* Blend at left edge */}
+            <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#060612]/70 to-transparent" />
           </div>
 
-          {/* MOBILE: CTA panel below the flyer */}
-          <div className="flex min-h-0 flex-1 flex-col justify-center px-6 pb-14 pt-2 sm:hidden">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f5a623]">{s.service}</p>
-            <h2 className="mt-1.5 text-2xl font-bold leading-snug text-white">
+          {/* ── MOBILE: textured CTA panel below flyer ── */}
+          <div
+            className="flex min-h-0 flex-1 flex-col justify-center px-6 pb-14 pt-3 sm:hidden"
+            style={CTA_BG}
+          >
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#f5a623]">
+              {s.service}
+            </p>
+            <h2 className="mt-2 text-2xl font-bold leading-snug text-white">
               {s.headline}
             </h2>
             <div className="mt-4 flex flex-wrap gap-2.5">
@@ -157,7 +185,7 @@ export function PromoShowcase() {
               </a>
               <a
                 href="tel:+18763149024"
-                className="inline-flex items-center justify-center rounded-full border-2 border-white/50 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-full border border-white/30 px-4 py-2.5 text-sm font-bold text-white"
               >
                 876-314-9024
               </a>
@@ -171,15 +199,15 @@ export function PromoShowcase() {
         {SLIDES.map((s, i) => (
           <span
             key={i}
-            className="rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest sm:px-3 sm:text-[10px]"
+            className="rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest backdrop-blur-sm sm:px-3 sm:text-[10px]"
             style={i === 0 ? {
               animation: `trella-label-start ${TOTAL}s linear infinite`,
             } : {
               animation: `trella-label ${TOTAL}s linear infinite`,
               animationDelay: `${i * DURATION}s`,
               animationFillMode: "backwards",
-              color: "rgba(255,255,255,0.38)",
-              borderColor: "rgba(255,255,255,0.15)",
+              color: "rgba(255,255,255,0.35)",
+              borderColor: "rgba(255,255,255,0.12)",
             }}
           >
             {s.service}
@@ -188,14 +216,24 @@ export function PromoShowcase() {
       </div>
 
       {/* ── SCROLLING TICKER ── */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden border-t border-white/10 bg-black/90 py-2">
+      <div
+        className="absolute bottom-0 left-0 right-0 z-20 overflow-hidden border-t border-white/10 py-2"
+        style={{ backgroundColor: "rgba(6,6,18,0.92)" }}
+      >
         <div
           className="flex w-max whitespace-nowrap"
           style={{ animation: "trella-ticker 22s linear infinite" }}
         >
           {[...SLIDES, ...SLIDES].map((s, i) => (
-            <span key={i} className="mx-8 text-[9px] font-bold uppercase tracking-[0.22em] text-[#f5a623] sm:text-[10px]">
-              {s.service} <span className="mx-3 text-white/25">·</span>
+            <span
+              key={i}
+              className="mx-8 text-[9px] font-bold uppercase tracking-[0.22em] sm:text-[10px]"
+              style={{ color: "#f5a623" }}
+            >
+              {s.service}{" "}
+              <span className="mx-3" style={{ color: "rgba(255,255,255,0.2)" }}>
+                ·
+              </span>
             </span>
           ))}
         </div>
