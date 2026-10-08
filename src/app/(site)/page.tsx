@@ -52,7 +52,7 @@ export default function HomePage() {
       {/* ---------- STATS BAND ---------- */}
       <section className="brand-gradient py-16 text-white">
         <Container>
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {heroStats.map((s) => <Stat key={s.label} value={s.value} label={s.label} sub={s.sub} onDark />)}
           </div>
         </Container>
@@ -67,7 +67,7 @@ export default function HomePage() {
               <div key={p.step} className="relative rounded-2xl border border-line bg-white p-5">
                 <div className="flex items-center justify-between">
                   <IconTile tone={p.step % 2 ? "brand" : "accent"}><Icon name={p.icon} /></IconTile>
-                  <span className="text-3xl font-bold text-surface-3">0{p.step}</span>
+                  <span className="text-3xl font-bold" style={{color:"rgba(22,1,154,0.22)"}}>0{p.step}</span>
                 </div>
                 <h3 className="mt-4 font-bold">{p.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-soft">{p.description}</p>
