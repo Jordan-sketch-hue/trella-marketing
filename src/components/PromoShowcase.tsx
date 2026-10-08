@@ -33,8 +33,8 @@ const TOTAL = SLIDES.length * DURATION;
 const CTA_BG: React.CSSProperties = {
   backgroundImage: [
     "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
-    "radial-gradient(ellipse 80% 55% at 5% 100%, rgba(245,166,35,0.13) 0%, transparent 60%)",
-    "radial-gradient(ellipse 55% 40% at 95% 5%, rgba(22,1,154,0.18) 0%, transparent 55%)",
+    "radial-gradient(ellipse 80% 55% at 5% 100%, rgba(245,166,35,0.16) 0%, transparent 60%)",
+    "radial-gradient(ellipse 55% 40% at 95% 5%, rgba(22,1,154,0.20) 0%, transparent 55%)",
   ].join(", "),
   backgroundSize: "22px 22px, auto, auto",
   backgroundColor: "#060612",
@@ -87,22 +87,21 @@ export function PromoShowcase() {
             opacity: 0,
           }}
         >
-          {/* ── MOBILE: flyer (60% height) — top-pad 40px so pills don't cover image ── */}
+          {/* ── MOBILE: flyer — not absolute, no pills overlap ── */}
           <div
             className="relative shrink-0 overflow-hidden sm:hidden"
-            style={{ height: "60%", paddingTop: "40px" }}
+            style={{ height: "60%" }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={s.bg}
               alt={s.service}
-              className="absolute inset-0 h-full w-full object-contain object-top"
-              style={{ top: "40px" }}
+              style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "top center", display: "block" }}
             />
-            {/* Bottom vignette blends into CTA zone */}
+            {/* Bottom fade into CTA zone */}
             <div
               className="absolute inset-x-0 bottom-0 pointer-events-none"
-              style={{ height: "80px", background: "linear-gradient(to top, #060612 0%, transparent 100%)" }}
+              style={{ height: "72px", background: "linear-gradient(to top, #060612, transparent)" }}
             />
           </div>
 
@@ -147,18 +146,21 @@ export function PromoShowcase() {
             <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#060612]/70 to-transparent" />
           </div>
 
-          {/* ── MOBILE: CTA strip — own distinct zone with gold top border ── */}
+          {/* ── MOBILE: CTA strip — own solid zone, gold top border ── */}
           <div
             className="shrink-0 flex flex-col justify-center px-5 sm:hidden"
             style={{
               ...CTA_BG,
               height: "40%",
-              borderTop: "2px solid rgba(245,166,35,0.55)",
+              borderTop: "2px solid rgba(245,166,35,0.60)",
+              paddingTop: "16px",
               paddingBottom: "52px",
-              paddingTop: "18px",
             }}
           >
-            <p className="text-[9px] font-bold uppercase tracking-[0.25em]" style={{ color: "#f5a623" }}>
+            <p
+              className="text-[9px] font-bold uppercase tracking-[0.25em]"
+              style={{ color: "#f5a623" }}
+            >
               {s.service}
             </p>
             <h2 className="mt-1 text-lg font-bold leading-snug text-white">
@@ -184,12 +186,12 @@ export function PromoShowcase() {
         </div>
       ))}
 
-      {/* ── SERVICE LABEL PILLS — above the flyer, z-20 ── */}
-      <div className="absolute left-3 right-3 top-3 z-20 flex flex-wrap gap-1 sm:left-8 sm:top-5 sm:gap-2">
+      {/* ── SERVICE LABEL PILLS — desktop only, never overlaps mobile flyer ── */}
+      <div className="absolute left-8 top-5 z-20 hidden gap-2 sm:flex sm:flex-wrap">
         {SLIDES.map((s, i) => (
           <span
             key={i}
-            className="rounded-full border px-2 py-0.5 text-[8px] font-bold uppercase tracking-widest backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px]"
+            className="rounded-full border px-3 py-1 text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm"
             style={i === 0 ? {
               animation: `trella-label-start ${TOTAL}s linear infinite`,
             } : {
