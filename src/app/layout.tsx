@@ -1,6 +1,5 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import "./globals.css";
-import PwaInstall from "../components/pwa-install";
 import PwaUpdate from "../components/pwa-update";
 
 export const metadata: Metadata = {
@@ -41,7 +40,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         {children}
-        <PwaInstall />
         <PwaUpdate />
       </body>
     </html>
