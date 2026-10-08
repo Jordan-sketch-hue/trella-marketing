@@ -142,8 +142,7 @@ export function PromoShowcase() {
             <img
               src={s.bg}
               alt={s.service}
-              className="absolute left-0 right-0 bottom-0 w-full object-contain object-top"
-              style={{ top: "44px" }}
+              className="absolute inset-0 h-full w-full object-contain object-center"
             />
             <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#060612]/70 to-transparent" />
           </div>
