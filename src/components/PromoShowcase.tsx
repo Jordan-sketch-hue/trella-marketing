@@ -30,13 +30,6 @@ const SLIDES = [
 const DURATION = 5;
 const TOTAL = SLIDES.length * DURATION; // 20s
 
-/*
- * CTA panel: layered background
- * 1. White micro-dot grid at 4% — breaks the flat surface
- * 2. Gold radial glow at bottom-left 13% — warms the CTA/button zone
- * 3. Brand-blue radial glow at top-right 18% — cool brand counterpoint
- * 4. Deep navy base #060612 — not pure black, has depth
- */
 const CTA_BG: React.CSSProperties = {
   backgroundImage: [
     "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
@@ -95,7 +88,7 @@ export function PromoShowcase() {
             opacity: 0,
           }}
         >
-          {/* ── MOBILE: flyer on top (65% of height) ── */}
+          {/* ── MOBILE: flyer (65% height) ── */}
           <div className="relative shrink-0 sm:hidden" style={{ height: "65%" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -103,8 +96,18 @@ export function PromoShowcase() {
               alt={s.service}
               className="absolute inset-0 h-full w-full object-contain object-top"
             />
-            {/* Fade into the CTA panel below */}
-            <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#060612] to-transparent" />
+            {/* Unified color grade: slight dark + brand-warm tint across all slides */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(180deg, rgba(6,6,18,0.10) 0%, rgba(6,6,18,0.0) 30%, rgba(6,6,18,0.30) 80%, rgba(6,6,18,0.90) 100%)",
+              }}
+            />
+            {/* Warm amber wash to unify image temperatures */}
+            <div
+              className="absolute inset-0"
+              style={{ background: "rgba(20,8,0,0.12)", mixBlendMode: "multiply" } as React.CSSProperties}
+            />
           </div>
 
           {/* ── DESKTOP: dark textured CTA panel left ── */}
@@ -112,7 +115,6 @@ export function PromoShowcase() {
             className="relative hidden sm:flex w-[38%] shrink-0 flex-col justify-center px-10 py-16 lg:px-14"
             style={CTA_BG}
           >
-            {/* Thin edge fade into the flyer */}
             <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-r from-[#060612]/90 to-transparent" />
             <p className="text-xs font-bold uppercase tracking-[0.22em]" style={{ color: "#f5a623" }}>
               {s.service}
@@ -146,36 +148,42 @@ export function PromoShowcase() {
               alt={s.service}
               className="absolute inset-0 h-full w-full object-contain object-center"
             />
+            {/* Desktop color grade — subtle only */}
+            <div
+              className="absolute inset-0"
+              style={{ background: "rgba(20,8,0,0.08)", mixBlendMode: "multiply" } as React.CSSProperties}
+            />
             <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#060612]/70 to-transparent" />
           </div>
 
-          {/* ── MOBILE: textured CTA panel below (35% of height) ── */}
+          {/* ── MOBILE: CTA panel (35% height) — single action design ── */}
           <div
-            className="flex min-h-0 flex-1 flex-col justify-center px-5 pb-12 pt-2 sm:hidden"
+            className="flex min-h-0 flex-1 flex-col justify-center px-5 pb-10 pt-3 sm:hidden"
             style={CTA_BG}
           >
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: "#f5a623" }}>
+            <p className="text-[9px] font-bold uppercase tracking-[0.25em]" style={{ color: "#f5a623" }}>
               {s.service}
             </p>
-            <h2 className="mt-1.5 text-xl font-bold leading-snug text-white sm:text-2xl">
+            <h2 className="mt-1 text-lg font-bold leading-snug text-white">
               {s.headline}
             </h2>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <a
-                href={`${waBase}${encodeURIComponent(s.wa)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-[#f5a623] px-4 py-2.5 text-sm font-bold text-black"
-              >
-                Book Now — WhatsApp
-              </a>
-              <a
-                href="tel:+18763149024"
-                className="inline-flex items-center justify-center rounded-full border border-white/40 px-4 py-2.5 text-sm font-bold text-white"
-              >
-                876-314-9024
-              </a>
-            </div>
+            {/* Single full-width CTA + phone as text link */}
+            <a
+              href={`${waBase}${encodeURIComponent(s.wa)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 flex w-full items-center justify-center rounded-xl py-3 text-sm font-bold text-black"
+              style={{ background: "linear-gradient(90deg, #f5a623 0%, #e8900a 100%)" }}
+            >
+              Book Now on WhatsApp →
+            </a>
+            <a
+              href="tel:+18763149024"
+              className="mt-2 block text-center text-xs font-semibold"
+              style={{ color: "rgba(255,255,255,0.55)" }}
+            >
+              or call 876-314-9024
+            </a>
           </div>
         </div>
       ))}
