@@ -91,7 +91,7 @@ export default function ServicesPage() {
               <div
                 key={s.id}
                 id={s.id}
-                className="group relative overflow-hidden rounded-2xl border border-white/10"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10"
                 style={{ backgroundColor: "#0d0d22" }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -101,12 +101,12 @@ export default function ServicesPage() {
                   className="h-56 w-full object-cover object-top transition group-hover:scale-105"
                   style={{ transition: "transform 0.4s ease" }}
                 />
-                <div className="p-5">
+                <div className="flex flex-1 flex-col p-5">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "#f5a623" }}>
                     {s.title}
                   </p>
                   <h3 className="mt-1 text-lg font-bold text-white">{s.headline}</h3>
-                  <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
                     {s.description}
                   </p>
                   <a
