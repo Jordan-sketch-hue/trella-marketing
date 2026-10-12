@@ -11,6 +11,47 @@ export const metadata = {
     "Brand strategy, social media, paid ads, content, web & SEO, and analytics — one connected marketing engine, all measured against real results.",
 };
 
+const promoServices = [
+  {
+    id: "professional-models",
+    slug: "professional-models",
+    image: "/images/trella/professional-models.webp",
+    title: "Professional Models",
+    headline: "Beauty. Confidence. Impact.",
+    description: "Polished, professional models that represent your brand with presence and authenticity — at events, campaigns, shoots, and activations.",
+    wa: "I'm interested in Professional Models for my brand",
+  },
+  {
+    id: "dancers-promo-reps",
+    slug: "dancers-promo-reps",
+    image: "/images/trella/dancers-promo-rep.webp",
+    title: "Dancers & Promo Reps",
+    headline: "Energy That Stops the Scroll.",
+    description: "High-energy performers and promo reps who turn heads, draw crowds, and make your brand impossible to ignore.",
+    wa: "I'd like to book Dancers & Promo Reps",
+  },
+  {
+    id: "event-staffing",
+    slug: "event-staffing",
+    image: "/images/trella/green-dress-promo.webp",
+    title: "Event Staffing",
+    headline: "Every Room. Every Event.",
+    description: "Professional, brand-trained staff who manage your event floor, guide guests, and ensure every touch point reflects your brand.",
+    wa: "I need Event Staffing for my event",
+  },
+  {
+    id: "brand-ambassador",
+    slug: "brand-ambassador",
+    image: "/images/trella/brand-ambassador.webp",
+    title: "Brand Ambassador",
+    headline: "Your Brand. Our Mission.",
+    description: "Dedicated ambassadors who live your brand on and off the stage — in-store, online, and at every consumer touchpoint.",
+    wa: "I want Brand Ambassador services",
+  },
+];
+
+const WA_BASE = "https://wa.me/18763149024?text=";
+
 export default function ServicesPage() {
   return (
     <>
@@ -36,7 +77,55 @@ export default function ServicesPage() {
         </Container>
       </section>
 
-      {/* ---------- SERVICE GRID ---------- */}
+      {/* ---------- PROMO & TALENT SERVICES ---------- */}
+      <section className="py-20" style={{ backgroundColor: "#060612" }}>
+        <Container>
+          <SectionHeading
+            align="center"
+            eyebrow="Talent & activations"
+            title={<span className="text-white">Promo &amp; Talent Services</span>}
+            lead={<span style={{ color: "rgba(255,255,255,0.55)" }}>Models, dancers, promo reps, and brand ambassadors — the faces and energy that bring your brand to life in the real world.</span>}
+          />
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {promoServices.map((s) => (
+              <div
+                key={s.id}
+                id={s.id}
+                className="group relative overflow-hidden rounded-2xl border border-white/10"
+                style={{ backgroundColor: "#0d0d22" }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.image}
+                  alt={s.title}
+                  className="h-56 w-full object-cover object-top transition group-hover:scale-105"
+                  style={{ transition: "transform 0.4s ease" }}
+                />
+                <div className="p-5">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: "#f5a623" }}>
+                    {s.title}
+                  </p>
+                  <h3 className="mt-1 text-lg font-bold text-white">{s.headline}</h3>
+                  <p className="mt-2 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
+                    {s.description}
+                  </p>
+                  <a
+                    href={`${WA_BASE}${encodeURIComponent(s.wa)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex w-full items-center justify-center rounded-xl py-3 text-sm font-bold text-black transition hover:opacity-90"
+                    style={{ background: "linear-gradient(90deg,#f5a623,#e8900a)" }}
+                  >
+                    Book via WhatsApp
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------- MARKETING SERVICE GRID ---------- */}
       <section className="py-20">
         <Container>
           <SectionHeading
@@ -81,7 +170,7 @@ export default function ServicesPage() {
               <div key={p.step} className="relative rounded-2xl border border-line bg-white p-5">
                 <div className="flex items-center justify-between">
                   <IconTile tone={p.step % 2 ? "brand" : "accent"}><Icon name={p.icon} /></IconTile>
-                  <span className="text-3xl font-bold text-surface-3">0{p.step}</span>
+                  <span className="text-3xl font-bold text-ink/15">0{p.step}</span>
                 </div>
                 <h3 className="mt-4 font-bold">{p.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-soft">{p.description}</p>
