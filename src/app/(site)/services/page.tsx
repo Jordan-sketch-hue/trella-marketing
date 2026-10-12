@@ -170,7 +170,7 @@ export default function ServicesPage() {
               <div key={p.step} className="relative rounded-2xl border border-line bg-white p-5">
                 <div className="flex items-center justify-between">
                   <IconTile tone={p.step % 2 ? "brand" : "accent"}><Icon name={p.icon} /></IconTile>
-                  <span className="text-3xl font-bold text-ink/15">0{p.step}</span>
+                  <span className="text-3xl font-bold text-gray-300">0{p.step}</span>
                 </div>
                 <h3 className="mt-4 font-bold">{p.title}</h3>
                 <p className="mt-1 text-sm leading-relaxed text-ink-soft">{p.description}</p>
