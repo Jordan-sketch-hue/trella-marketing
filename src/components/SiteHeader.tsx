@@ -12,6 +12,12 @@ const serviceItems = [
   { href: "/services#dancers-promo-reps", label: "Dancers & Promo Reps" },
   { href: "/services#event-staffing", label: "Event Staffing" },
   { href: "/services#brand-ambassador", label: "Brand Ambassador" },
+  { href: "/services/brand-strategy", label: "Brand Strategy & Identity" },
+  { href: "/services/social-media", label: "Social Media Management" },
+  { href: "/services/paid-advertising", label: "Paid Advertising" },
+  { href: "/services/content-creative", label: "Content & Creative" },
+  { href: "/services/web-seo", label: "Website & SEO" },
+  { href: "/services/analytics-growth", label: "Analytics & Growth" },
 ];
 
 const nav = [
@@ -47,15 +53,20 @@ export function SiteHeader() {
                     <ChevronDown className="size-3.5 transition-transform group-hover:rotate-180" />
                   </Link>
                   <div className="absolute left-0 top-full pt-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity z-50">
-                    <div className="min-w-[200px] rounded-xl border border-line bg-white py-1.5 shadow-lg">
-                      {n.dropdown.map((d) => (
-                        <Link
-                          key={d.href}
-                          href={d.href}
-                          className="block px-4 py-2.5 text-sm text-ink-soft transition hover:bg-surface-2 hover:text-ink"
-                        >
-                          {d.label}
-                        </Link>
+                    <div className="min-w-[220px] rounded-xl border border-line bg-white py-1.5 shadow-lg">
+                      {n.dropdown.map((d, i) => (
+                        <>
+                          {i === 4 && (
+                            <div key="divider" className="my-1 border-t border-line" />
+                          )}
+                          <Link
+                            key={d.href}
+                            href={d.href}
+                            className="block px-4 py-2.5 text-sm text-ink-soft transition hover:bg-surface-2 hover:text-ink"
+                          >
+                            {d.label}
+                          </Link>
+                        </>
                       ))}
                     </div>
                   </div>
@@ -95,15 +106,18 @@ export function SiteHeader() {
                     </button>
                     {servicesOpen && (
                       <div className="ml-4 flex flex-col gap-0.5 pb-1">
-                        {n.dropdown.map((d) => (
-                          <Link
-                            key={d.href}
-                            href={d.href}
-                            onClick={() => { setOpen(false); setServicesOpen(false); }}
-                            className="rounded-md px-2 py-2.5 text-sm text-ink-soft hover:bg-surface-2 hover:text-ink"
-                          >
-                            {d.label}
-                          </Link>
+                        {n.dropdown.map((d, i) => (
+                          <>
+                            {i === 4 && <div key="divider" className="my-1 border-t border-line" />}
+                            <Link
+                              key={d.href}
+                              href={d.href}
+                              onClick={() => { setOpen(false); setServicesOpen(false); }}
+                              className="rounded-md px-2 py-2.5 text-sm text-ink-soft hover:bg-surface-2 hover:text-ink"
+                            >
+                              {d.label}
+                            </Link>
+                          </>
                         ))}
                       </div>
                     )}
