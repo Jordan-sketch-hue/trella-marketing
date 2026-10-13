@@ -2,17 +2,31 @@
 import { useState } from "react";
 import { Send, CheckCircle2 } from "lucide-react";
 import { Card, Button } from "@/components/ui";
+import { submitContactForm } from "./actions";
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: "", business: "", email: "", message: "" });
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    setSubmitting(true);
+    setError(null);
+
+    const fd = new FormData(e.currentTarget);
+    const result = await submitContactForm(fd);
+
+    setSubmitting(false);
+    if (result.ok) {
+      setSent(true);
+    } else {
+      setError(result.error ?? "Something went wrong. Please try again.");
+    }
   }
 
   const inputCls =
@@ -48,22 +62,25 @@ export function ContactForm() {
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <div>
           <label className={labelCls} htmlFor="name">Your name</label>
-          <input id="name" required value={form.name} onChange={set("name")} className={inputCls} placeholder="Jane Brown" />
+          <input id="name" name="name" required value={form.name} onChange={set("name")} className={inputCls} placeholder="Jane Brown" />
         </div>
         <div>
           <label className={labelCls} htmlFor="business">Business name</label>
-          <input id="business" value={form.business} onChange={set("business")} className={inputCls} placeholder="Your company" />
+          <input id="business" name="business" value={form.business} onChange={set("business")} className={inputCls} placeholder="Your company" />
         </div>
         <div>
           <label className={labelCls} htmlFor="email">Email</label>
-          <input id="email" type="email" required value={form.email} onChange={set("email")} className={inputCls} placeholder="you@company.com" />
+          <input id="email" name="email" type="email" required value={form.email} onChange={set("email")} className={inputCls} placeholder="you@company.com" />
         </div>
         <div>
           <label className={labelCls} htmlFor="message">How can we help?</label>
-          <textarea id="message" required rows={5} value={form.message} onChange={set("message")} className={inputCls} placeholder="Tell us a little about your goals…" />
+          <textarea id="message" name="message" required rows={5} value={form.message} onChange={set("message")} className={inputCls} placeholder="Tell us a little about your goals…" />
         </div>
-        <Button type="submit" size="lg" className="w-full">
-          Send message <Send className="size-4" />
+        {error && (
+          <p className="rounded-lg bg-rose-50 px-4 py-2.5 text-sm text-rose-700">{error}</p>
+        )}
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Sending…" : <><Send className="size-4" /> Send message</>}
         </Button>
       </form>
     </Card>
