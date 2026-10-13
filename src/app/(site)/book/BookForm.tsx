@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ArrowRight, CalendarCheck } from "lucide-react";
 import { Card, Button } from "@/components/ui";
 import { serviceCategories } from "@/lib/data";
+import { submitBookingForm } from "./actions";
 
 const budgets = [
   "Under $850 / month",
@@ -21,6 +22,8 @@ const times = [
 
 export function BookForm() {
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "", business: "", email: "", phone: "",
     service: serviceCategories[0].title, budget: budgets[1], time: times[0], notes: "",
@@ -30,9 +33,20 @@ export function BookForm() {
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
       setForm((f) => ({ ...f, [k]: e.target.value }));
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSent(true);
+    setSubmitting(true);
+    setError(null);
+
+    const fd = new FormData(e.currentTarget);
+    const result = await submitBookingForm(fd);
+
+    setSubmitting(false);
+    if (result.ok) {
+      setSent(true);
+    } else {
+      setError(result.error ?? "Something went wrong. Please try again.");
+    }
   }
 
   const inputCls =
@@ -75,49 +89,52 @@ export function BookForm() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls} htmlFor="name">Your name</label>
-            <input id="name" required value={form.name} onChange={set("name")} className={inputCls} placeholder="Jane Brown" />
+            <input id="name" name="name" required value={form.name} onChange={set("name")} className={inputCls} placeholder="Jane Brown" />
           </div>
           <div>
             <label className={labelCls} htmlFor="business">Business name</label>
-            <input id="business" required value={form.business} onChange={set("business")} className={inputCls} placeholder="Your company" />
+            <input id="business" name="business" required value={form.business} onChange={set("business")} className={inputCls} placeholder="Your company" />
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls} htmlFor="email">Email</label>
-            <input id="email" type="email" required value={form.email} onChange={set("email")} className={inputCls} placeholder="you@company.com" />
+            <input id="email" name="email" type="email" required value={form.email} onChange={set("email")} className={inputCls} placeholder="you@company.com" />
           </div>
           <div>
             <label className={labelCls} htmlFor="phone">Phone</label>
-            <input id="phone" type="tel" value={form.phone} onChange={set("phone")} className={inputCls} placeholder="+1 (876) 000-0000" />
+            <input id="phone" name="phone" type="tel" value={form.phone} onChange={set("phone")} className={inputCls} placeholder="+1 (876) 000-0000" />
           </div>
         </div>
         <div>
           <label className={labelCls} htmlFor="service">Service of interest</label>
-          <select id="service" value={form.service} onChange={set("service")} className={inputCls}>
+          <select id="service" name="service" value={form.service} onChange={set("service")} className={inputCls}>
             {serviceCategories.map((s) => <option key={s.slug} value={s.title}>{s.title}</option>)}
           </select>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={labelCls} htmlFor="budget">Monthly budget</label>
-            <select id="budget" value={form.budget} onChange={set("budget")} className={inputCls}>
+            <select id="budget" name="budget" value={form.budget} onChange={set("budget")} className={inputCls}>
               {budgets.map((b) => <option key={b} value={b}>{b}</option>)}
             </select>
           </div>
           <div>
             <label className={labelCls} htmlFor="time">Preferred day / time</label>
-            <select id="time" value={form.time} onChange={set("time")} className={inputCls}>
+            <select id="time" name="time" value={form.time} onChange={set("time")} className={inputCls}>
               {times.map((t) => <option key={t} value={t}>{t}</option>)}
             </select>
           </div>
         </div>
         <div>
           <label className={labelCls} htmlFor="notes">Anything we should know?</label>
-          <textarea id="notes" rows={4} value={form.notes} onChange={set("notes")} className={inputCls} placeholder="A little about your goals, timeline, or current challenges…" />
+          <textarea id="notes" name="notes" rows={4} value={form.notes} onChange={set("notes")} className={inputCls} placeholder="A little about your goals, timeline, or current challenges…" />
         </div>
-        <Button type="submit" size="lg" className="w-full">
-          Request my free call <ArrowRight className="size-4" />
+        {error && (
+          <p className="rounded-lg bg-rose-50 px-4 py-2.5 text-sm text-rose-700">{error}</p>
+        )}
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Submitting…" : <><ArrowRight className="size-4" /> Request my free call</>}
         </Button>
         <p className="text-center text-xs text-ink-soft">We&apos;ll never share your details. Unsubscribe anytime.</p>
       </form>

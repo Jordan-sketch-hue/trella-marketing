@@ -6,7 +6,8 @@ import {
 import { Card, Badge } from "@/components/ui";
 import { StatCard } from "@/components/ui";
 import { AreaTrend, MultiLine, Donut, BRAND, BRIGHT, ACCENT } from "@/components/charts";
-import { clients, leads, campaigns, monthlyTrend, channelMix, activities } from "@/lib/data";
+import { getClients, getLeads, getCampaigns, getActivities } from "@/lib/queries";
+import { monthlyTrend, channelMix } from "@/lib/data";
 import type { LeadStage } from "@/lib/types";
 import { usd, relTime, cn } from "@/lib/utils";
 
@@ -27,12 +28,21 @@ function statusTone(s: string) {
   return s === "Active" ? "good" : s === "Onboarding" ? "info" : "warn";
 }
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const [clients, leads, campaigns, activities] = await Promise.all([
+    getClients(),
+    getLeads(),
+    getCampaigns(),
+    getActivities(),
+  ]);
+
   const mrr = clients.reduce((s, c) => s + c.mrr, 0);
   const activeClients = clients.filter((c) => c.status === "Active").length;
   const openLeads = leads.filter((l) => l.stage !== "Won" && l.stage !== "Lost");
   const activeCampaigns = campaigns.filter((c) => c.status === "Active");
-  const avgRoas = activeCampaigns.reduce((s, c) => s + c.roas, 0) / activeCampaigns.length;
+  const avgRoas = activeCampaigns.length
+    ? activeCampaigns.reduce((s, c) => s + Number(c.roas), 0) / activeCampaigns.length
+    : 0;
 
   const stages: LeadStage[] = ["New", "Contacted", "Qualified", "Proposal", "Won", "Lost"];
   const pipeline = stages.map((stage) => ({
@@ -175,7 +185,7 @@ export default function AdminDashboard() {
         </div>
         <div className="divide-y divide-line">
           {activities.map((a) => {
-            const Icon = ACT_ICON[a.type] ?? Sparkles;
+            const Icon = ACT_ICON[a.type as keyof typeof ACT_ICON] ?? Sparkles;
             return (
               <div key={a.id} className="flex items-start gap-3 p-4">
                 <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-brand">
